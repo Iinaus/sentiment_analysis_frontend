@@ -12,6 +12,12 @@ function App() {
     setInputSentence(event.target.value)
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      evaluate()
+    }
+  }
+
   // Modify this function to fetch evaluation from backend in the future
   const fetchEvaluation = (resultSentence) => {
     const sentiments = ["positive", "neutral", "negative"]
@@ -35,6 +41,7 @@ function App() {
       <input
         value = {inputSentence}
         onChange = {handleInputChange}
+        onKeyDown= {handleKeyDown}
       ></input>
       <button
         onClick = {evaluate}
