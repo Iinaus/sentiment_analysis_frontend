@@ -1,34 +1,63 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [inputSentence, setInputSentence] = useState("")
+  const [resultSentence, setResultSentence] = useState("")
+  const [sentimentPrediction, setSentimentPrediction] = useState("")
+  const [isEvaluated, setIsEvaluated] = useState(false)
+
+  const handleInputChange = (event) => {
+    setInputSentence(event.target.value)
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      evaluate()
+    }
+  }
+
+  // Modify this function to fetch evaluation from backend in the future
+  const fetchEvaluation = (resultSentence) => {
+    const sentiments = ["positive", "neutral", "negative"]
+    setSentimentPrediction(sentiments[Math.floor(Math.random() * 3)]);
+  }
+
+  const evaluate = () => {
+    if (inputSentence.trim() !== "") {   
+      setResultSentence(inputSentence)
+      fetchEvaluation(resultSentence)
+      setIsEvaluated(true)
+      setInputSentence("")
+    }
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <p>Toimiiko pipeline?</p>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Sentiment Analysis</h1>
+      <p>This is a dummy frontend for upcoming sentiment analysis backend.</p>
+      <p>Write a sentance to evaluate.</p>
+      <input
+        value = {inputSentence}
+        onChange = {handleInputChange}
+        onKeyDown= {handleKeyDown}
+      ></input>
+      <button
+        onClick = {evaluate}
+      >
+        Evaluate
+      </button>
+      {isEvaluated && (
+        <div>
+          <p>Your sentence was:
+            <span className = "long-text"> {resultSentence}</span>
+          </p>
+          <p className = {sentimentPrediction}>
+            The sentence was evaluated as {sentimentPrediction}.
+          </p>
+        </div>
+      )}
     </>
   )
 }
