@@ -27,13 +27,36 @@ input {
 }
 
 .long-text {
-  display: inline-block;
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
   white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.positive {
+  color: white;
+  background-color: green;
+  padding: 0.5em 1em;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.negative {
+  color: white;
+  background-color: red;
+  padding: 0.5em 1em;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.neutral {
+  color: black;
+  background-color: yellow;
+  padding: 0.5em 1em;
+  border-radius: 20px;
+  font-weight: bold;
 }
 
 body {

@@ -3,21 +3,26 @@ import './App.css'
 
 function App() {
 
-  const [inputSentence, setInputSentence] = useState("");  
-  const [resultSentence, setResultSentence] = useState("");
-  const [sentimentPrediction, setSentimentPrediction] = useState("");
-  const [isEvaluated, setIsEvaluated] = useState(false);
+  const [inputSentence, setInputSentence] = useState("")
+  const [resultSentence, setResultSentence] = useState("")
+  const [sentimentPrediction, setSentimentPrediction] = useState("")
+  const [isEvaluated, setIsEvaluated] = useState(false)
 
   const handleInputChange = (event) => {
     setInputSentence(event.target.value)
   }
 
+  // Modify this function to fetch evaluation from backend in the future
+  const fetchEvaluation = (resultSentence) => {
+    const sentiments = ["positive", "neutral", "negative"]
+    setSentimentPrediction(sentiments[Math.floor(Math.random() * 3)]);
+  }
+
   const evaluate = () => {
-    if (inputSentence.trim() !== "") {
-      const sentiments = ["positive", "neutral", "negative"];
-      setSentimentPrediction(sentiments[Math.floor(Math.random() * 3)]);
-      setResultSentence(inputSentence);
-      setIsEvaluated(true); 
+    if (inputSentence.trim() !== "") {   
+      setResultSentence(inputSentence)
+      fetchEvaluation(resultSentence)
+      setIsEvaluated(true)
       setInputSentence("")
     }
   }
@@ -38,10 +43,12 @@ function App() {
       </button>
       {isEvaluated && (
         <div>
-          <p>Your sentence was: 
-            <span className="long-text">{resultSentence}</span>
+          <p>Your sentence was:
+            <span className = "long-text"> {resultSentence}</span>
           </p>
-          <p>The sentence was evaluated as {sentimentPrediction}.</p>
+          <p className = {sentimentPrediction}>
+            The sentence was evaluated as {sentimentPrediction}.
+          </p>
         </div>
       )}
     </>
