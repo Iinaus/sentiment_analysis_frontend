@@ -54,11 +54,16 @@ function App() {
         setUserInput("")
       } else {
         console.error("Evaluation failed.")
+        toast.error("Evaluation failed, try again later", {
+          position: "bottom-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+        })
       }  
 
     } else {
       console.log("Input is empty.")
-      toast.error("Please enter text to be evaluated!", {
+      toast.warn("Please enter text to be evaluated", {
         position: "bottom-center",
         autoClose: 2000,
         hideProgressBar: true,
