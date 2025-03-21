@@ -18,10 +18,22 @@ function App() {
     }
   }
 
-  // Modify this function to fetch evaluation from backend in the future
-  const fetchEvaluation = (resultSentence) => {
-    const sentiments = ["positive", "neutral", "negative"]
-    setSentimentPrediction(sentiments[Math.floor(Math.random() * 3)]);
+  const fetchEvaluation = async (resultSentence) => {
+    try {
+      const response = await fetch('https://sentiment-analysis-backend-cloud-computing-backend.2.rahtiapp.fi/evaluate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sentence: resultSentence }),
+      });
+  
+      const data = await response.json()
+      console.log('Vastaus palvelimelta:', data)
+      setSentimentPrediction(data.sentiment)
+    } catch (error) {
+      console.error('Error', error)
+    }
   }
 
   const evaluate = () => {
@@ -36,7 +48,7 @@ function App() {
   return (
     <>
       <h1>Sentiment Analysis</h1>
-      <p>This is a dummy frontend for upcoming sentiment analysis backend.</p>
+      <p>This is a dummy frontend for upcoming sentiment analysis backend...</p>
       <p>Write a sentance to evaluate.</p>
       <input
         value = {inputSentence}
