@@ -29,23 +29,32 @@ function App() {
       })
   
       const data = await response.json()
-      console.log('Vastaus palvelimelta:', data)
-
-      setSentence(sentence)
-      setSentimentPrediction(data.sentiment)
-      setIsEvaluated(true)
-      setUserInput("")      
+      return data
+          
     } catch (error) {
       console.error('Error', error)
-      setIsEvaluated(false)
+      return null
     }
   }
 
-  const evaluate = () => {
+  const evaluate = async () => {
     const trimmedInput = userInput.trim()
 
     if (trimmedInput !== "") {  
-      fetchEvaluation(trimmedInput)
+
+      const data = await fetchEvaluation(trimmedInput)
+
+      if (data) {
+        setSentence(data.sentence)
+        setSentimentPrediction(data.sentiment)
+        setIsEvaluated(true)
+        setUserInput("")
+      } else {
+        console.error("Evaluation failed.")
+      }  
+
+    } else {
+      console.log("Input is empty.")
     }
   }
 
