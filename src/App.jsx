@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import './App.css'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 
 function App() {
 
@@ -55,6 +58,11 @@ function App() {
 
     } else {
       console.log("Input is empty.")
+      toast.error("Please enter text to be evaluated!", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+      })
     }
   }
 
@@ -73,6 +81,7 @@ function App() {
       >
         Evaluate
       </button>
+      <ToastContainer />
       {isEvaluated && (
         <div>
           <p>Your sentence was:
