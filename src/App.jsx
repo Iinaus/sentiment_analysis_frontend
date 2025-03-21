@@ -74,8 +74,8 @@ function App() {
   return (
     <>
       <h1>Sentiment Analysis</h1>
-      <p>This is a dummy frontend for upcoming sentiment analysis backend.</p>
-      <p>Write a sentence to evaluate.</p>
+      <p>Welcome to the Sentiment Analysis Tool! Here, you can quickly analyze the sentiment of any text you input.</p>
+      <p>Simply type a sentence in english below, and we'll evaluate whether it's positive, negative, or neutral.</p>
       <input
         value = {userInput}
         onChange = {handleInputChange}
