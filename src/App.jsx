@@ -3,13 +3,13 @@ import './App.css'
 
 function App() {
 
-  const [inputSentence, setInputSentence] = useState("")
-  const [resultSentence, setResultSentence] = useState("")
+  const [userInput, setUserInput] = useState("")
+  const [sentence, setSentence] = useState("")
   const [sentimentPrediction, setSentimentPrediction] = useState("")
   const [isEvaluated, setIsEvaluated] = useState(false)
 
   const handleInputChange = (event) => {
-    setInputSentence(event.target.value)
+    setUserInput(event.target.value)
   }
 
   const handleKeyDown = (event) => {
@@ -18,40 +18,44 @@ function App() {
     }
   }
 
-  const fetchEvaluation = async (resultSentence) => {
+  const fetchEvaluation = async (sentence) => {
     try {
       const response = await fetch('https://sentiment-analysis-backend-cloud-computing-backend.2.rahtiapp.fi/evaluate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ sentence: resultSentence }),
-      });
+        body: JSON.stringify({ sentence: sentence }),
+      })
   
       const data = await response.json()
       console.log('Vastaus palvelimelta:', data)
+
+      setSentence(sentence)
       setSentimentPrediction(data.sentiment)
+      setIsEvaluated(true)
+      setUserInput("")      
     } catch (error) {
       console.error('Error', error)
+      setIsEvaluated(false)
     }
   }
 
   const evaluate = () => {
-    if (inputSentence.trim() !== "") {   
-      setResultSentence(inputSentence)
-      fetchEvaluation(resultSentence)
-      setIsEvaluated(true)
-      setInputSentence("")
+    const trimmedInput = userInput.trim()
+
+    if (trimmedInput !== "") {  
+      fetchEvaluation(trimmedInput)
     }
   }
 
   return (
     <>
       <h1>Sentiment Analysis</h1>
-      <p>This is a dummy frontend for upcoming sentiment analysis backend...</p>
-      <p>Write a sentance to evaluate.</p>
+      <p>This is a dummy frontend for upcoming sentiment analysis backend.</p>
+      <p>Write a sentence to evaluate.</p>
       <input
-        value = {inputSentence}
+        value = {userInput}
         onChange = {handleInputChange}
         onKeyDown= {handleKeyDown}
       ></input>
@@ -63,7 +67,7 @@ function App() {
       {isEvaluated && (
         <div>
           <p>Your sentence was:
-            <span className = "long-text"> {resultSentence}</span>
+            <span className = "long-text"> {sentence}</span>
           </p>
           <p className = {sentimentPrediction}>
             The sentence was evaluated as {sentimentPrediction}.
