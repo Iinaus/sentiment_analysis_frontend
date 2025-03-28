@@ -1,17 +1,6 @@
-import { useState } from 'react'
-import './App.css'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import React from 'react'
-import { 
-  Route, 
-  createBrowserRouter, 
-  createRoutesFromElements, 
-  RouterProvider 
-} from 'react-router-dom'
 
-
-function App() {
+const SentimentAnalysisPage = () => {
 
   const [userInput, setUserInput] = useState("")
   const [sentence, setSentence] = useState("")
@@ -111,4 +100,4 @@ function App() {
   )
 }
 
-export default App
+export default SentimentAnalysisPage
