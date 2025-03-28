@@ -1,17 +1,17 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
-import { useNavigate } from "react-router-dom"
+import { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import useAuth from '../hooks/useAuth'
 
 const SentimentAnalysisPage = () => {
+
+  useAuth()
 
   const [userInput, setUserInput] = useState("")
   const [sentence, setSentence] = useState("")
   const [sentimentPrediction, setSentimentPrediction] = useState("")
   const [isEvaluated, setIsEvaluated] = useState(false)
-
-  const navigate = useNavigate()
 
   const handleInputChange = (event) => {
     setUserInput(event.target.value)
@@ -79,13 +79,6 @@ const SentimentAnalysisPage = () => {
       })
     }
   }
-
-  useEffect(() => {
-    const token = sessionStorage.getItem('authToken')
-    if (!token) {
-      navigate('/')
-    }
-  }, [navigate])
 
   return (
     <>

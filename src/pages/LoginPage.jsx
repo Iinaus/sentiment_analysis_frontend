@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify'
 import LoginInfo from "../components/LoginInfo"
 
 const LoginPage = () => {
@@ -8,9 +9,9 @@ const LoginPage = () => {
 
   const navigate = useNavigate()
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      handleLogin()
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+        handleLogin(e)
     }
   }
 
@@ -34,10 +35,24 @@ const LoginPage = () => {
         sessionStorage.setItem("authToken", data.token)
         navigate("/evaluate")
       } else {
-        console.error("Error logging in:", data.message)
+        console.error("Error logging in:", data.error)
+        toast.error("Login failed, please check your credentials", {
+            position: "bottom-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+        })
       }
+
+      setUsername("")
+      setPassword("")
+
     } catch (error) {
       console.error("Error logging in:", error)
+      toast.error("An unexpected error occurred. Please try again later.", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+    })
     }
   }
 
@@ -70,6 +85,7 @@ const LoginPage = () => {
             </button>
         </form>
         <LoginInfo />
+        <ToastContainer />
     </>
   )
 }
