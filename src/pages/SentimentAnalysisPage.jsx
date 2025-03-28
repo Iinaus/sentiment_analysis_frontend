@@ -1,5 +1,6 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -9,6 +10,8 @@ const SentimentAnalysisPage = () => {
   const [sentence, setSentence] = useState("")
   const [sentimentPrediction, setSentimentPrediction] = useState("")
   const [isEvaluated, setIsEvaluated] = useState(false)
+
+  const navigate = useNavigate()
 
   const handleInputChange = (event) => {
     setUserInput(event.target.value)
@@ -20,15 +23,19 @@ const SentimentAnalysisPage = () => {
     }
   }
 
-  const localUrl = "http://127.0.0.1:8080/evaluate";
-  const URL = 'https://sentiment-analysis-backend-cloud-computing-backend.2.rahtiapp.fi/evaluate';
+  const localUrl = 'http://127.0.0.1:8080/evaluate'
+  const URL = 'https://sentiment-analysis-backend-cloud-computing-backend.2.rahtiapp.fi/evaluate'
 
   const fetchEvaluation = async (sentence) => {
+
+    const token = sessionStorage.getItem('authToken')
+
     try {
       const response = await fetch(localUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({ sentence: sentence }),
       })
@@ -72,6 +79,13 @@ const SentimentAnalysisPage = () => {
       })
     }
   }
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('authToken')
+    if (!token) {
+      navigate('/')
+    }
+  }, [navigate])
 
   return (
     <>
