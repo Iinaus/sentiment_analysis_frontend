@@ -5,7 +5,14 @@ import LoginInfo from "../components/LoginInfo"
 const LoginPage = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+
   const navigate = useNavigate()
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleLogin()
+    }
+  }
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -41,9 +48,10 @@ const LoginPage = () => {
             <div>
             <label>Username</label>
             <input
-                type="string"
+                type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                onKeyDown= {handleKeyDown}
                 required
             />
             </div>
@@ -53,6 +61,7 @@ const LoginPage = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown= {handleKeyDown}
                 required
             />
             </div>
