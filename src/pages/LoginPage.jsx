@@ -43,16 +43,16 @@ const LoginPage = () => {
         })
       }
 
-      setUsername("")
-      setPassword("")
-
     } catch (error) {
       console.error("Error logging in:", error)
       toast.error("An unexpected error occurred. Please try again later.", {
-        position: "bottom-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-    })
+            position: "bottom-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+        })
+    } finally {
+        setUsername("")
+        setPassword("")
     }
   }
 
