@@ -7,8 +7,31 @@ const LoginPage = () => {
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
 
-  const handleLogin = (e) => {
-    //navigate("/evaluate")    
+  const handleLogin = async (e) => {
+    e.preventDefault()
+
+    const apiUrl = "http://127.0.0.1:8080/login"
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        console.log("Login successful:", data)
+        navigate("/evaluate")
+      } else {
+        console.error("Error logging in:", data.message)
+      }
+    } catch (error) {
+      console.error("Error logging in:", error)
+    }
   }
 
   return (
