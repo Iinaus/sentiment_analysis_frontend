@@ -24,14 +24,14 @@ const SentimentAnalysisPage = () => {
   }
 
   const localUrl = 'http://127.0.0.1:8080/evaluate'
-  const URL = 'https://sentiment-analysis-backend-cloud-computing-backend.2.rahtiapp.fi/evaluate'
+  const url = 'https://sentiment-analysis-backend-cloud-computing-backend.2.rahtiapp.fi/evaluate'
 
   const fetchEvaluation = async (sentence) => {
 
     const token = sessionStorage.getItem('authToken')
 
     try {
-      const response = await fetch(localUrl, {
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

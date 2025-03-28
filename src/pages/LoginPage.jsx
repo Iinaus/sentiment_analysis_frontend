@@ -18,7 +18,7 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
 
-    const apiUrl = "http://127.0.0.1:8080/login"
+    const apiUrl = "https://sentiment-analysis-backend-cloud-computing-backend.2.rahtiapp.fi/login"
 
     try {
       const response = await fetch(apiUrl, {
