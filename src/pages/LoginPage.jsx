@@ -24,7 +24,7 @@ const LoginPage = () => {
       const data = await response.json()
 
       if (response.ok) {
-        console.log("Login successful:", data)
+        sessionStorage.setItem("authToken", data.token)
         navigate("/evaluate")
       } else {
         console.error("Error logging in:", data.message)
